@@ -1,6 +1,6 @@
 require 'sinatra'
 
-set :peer_list, []
+set :peer_list, {}
 
 get '/register_peer' do
 	if host_present?
