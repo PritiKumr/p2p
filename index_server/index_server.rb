@@ -40,11 +40,6 @@ end
 
 post '/retrieve' do
   # params[:peer_id] and params[:file_name] and params[:peer_id_that_has_file]
-  puts "--------------************"
-  puts settings.peer_list[params['peer_id_that_has_file']].to_s
-  puts settings.peer_list[params['peer_id_that_has_file']][:host].to_s
-  puts params.to_s
-
   HTTParty.post(
       "#{settings.peer_list[params['peer_id_that_has_file']][:host]}/send_file", {
         body: { 
@@ -53,7 +48,7 @@ post '/retrieve' do
         }
       }
     )
-  "Requesting passed to Peer Server"
+  "Request passed to Peer Server"
 end
 
 

@@ -25,14 +25,14 @@ get '/retrieve/:file_name/:peer_id_that_has_file' do
         }
       }
     )
-	puts "Requesting passed to Index server"
+	puts "Request passed to Index server"
 end
 
 post '/send_file' do
 	file_path = "#{settings.file_directory}/" + params[:file_name]
 	puts file_path
 	FileUtils.cp(file_path, params[:dest_folder])
-	puts "File seent"
+	puts "File sent"
 end
 
 get '/download' do
