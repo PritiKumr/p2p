@@ -4,11 +4,19 @@ require "httparty"
 require 'dotenv'
 Dotenv.load(".env", "#{ENV['PEER_ID']}.env")
 
+# All instance variables are designed to take values from the environmental files.
+# Sample:
+# @watching_directory = /Users/pinki/academics/AOS/p2p/peer/peer1
+# @peer_host = http://localhost:3001
+# @peer_id = 3001
+# @index_server_host = http://localhost:4567
+
 @watching_directory = ENV['DIRECTORY']
 @peer_host = ENV['PEER_HOST']
 @peer_id = ENV['PEER_ID']
 @index_server_host = ENV['INDEX_HOST']
 
+# Peer client attenpts to register with the index server on initial setup.
 def register_peer
   puts "Registering with Index Server at #{@index_server_host}"
   begin 
@@ -58,8 +66,9 @@ end
 puts "Initializing Peer"
 register_peer
 
+# Added listener to client directories to monitor all changes to the directory, so the central indexing server can always be at sync with the client peers.
+# Using Listen library to monitor all changes.
 listener = Listen.to(@watching_directory) do |modified, added, removed|
-  # file_modified modified unless modified.empty?
   file_added clean_file_path(added.first) unless added.empty?
   file_removed clean_file_path(removed.first) unless removed.empty?
 end
