@@ -16,6 +16,8 @@ Dotenv.load(".env", "#{ENV['PEER_ID']}.env")
 @peer_id = ENV['PEER_ID']
 @index_server_host = ENV['INDEX_HOST']
 
+binding.pry
+
 # Peer client attenpts to register with the index server on initial setup.
 def register_peer
   puts "Registering with Index Server at #{@index_server_host}"
@@ -32,12 +34,12 @@ def register_peer
 end
 
 def file_added file_path
-  puts "File added #{file_path}"
+  puts "File added - #{file_path} to #{@peer_id}"
   update_file_on_index 'add', file_path
 end
 
 def file_removed file_path
-  puts "File removed #{file_path}"
+  puts "File removed - #{file_path} to #{@peer_id}"
   update_file_on_index 'remove', file_path
 end
 
@@ -75,5 +77,4 @@ end
 
 listener.start # not blocking
 puts "Watching file changes at #{@watching_directory}"
-sleep
 

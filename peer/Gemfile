@@ -6,3 +6,5 @@ gem "pry"
 gem 'listen', '~> 3.0'
 gem "httparty"
 gem "dotenv"
+gem "rspec"
+gem "rack-test"

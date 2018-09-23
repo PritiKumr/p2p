@@ -34,7 +34,7 @@ get '/retrieve/:file_name/:peer_id_that_has_file' do
         }
       }
     )
-	puts "Request passed to Index server"
+	puts "File download request sent to Index server"
 end
 
 post '/send_file' do
@@ -43,7 +43,8 @@ post '/send_file' do
 	puts file_path
   # Files are sent from the serving peer to the requesing peer.
 	FileUtils.cp(file_path, params[:dest_folder])
-	puts "File sent"
+  puts "File sent to peer that requested. Request complete"
+	puts "Display File - #{params[:file_name]}"
 end
 
 get '/download' do
