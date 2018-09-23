@@ -17,14 +17,18 @@ set :peer_list, {}
 
 # Files hash that holds the list of files with their peer details,
 # files: {
-#   'file_name' : {
+#   'file_name' : [{
 #     peer_id: 'peer1',
 #     file_path: '/p2p/peer1/file_name'
-#   },
-#   'file_name2' : {
+#   }],
+#   'file_name2' : [{
 #     peer_id: 'peer2',
 #     file_path: '/p2p/peer2/file_name2'
-#   }
+#   },
+#   {
+#     peer_id: 'peer3',
+#     file_path: '/p2p/peer3/path/to/file_name2'
+#   }]
 # }
 set :files, {}
 
