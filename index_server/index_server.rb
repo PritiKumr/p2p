@@ -28,17 +28,19 @@ set :peer_list, {}
 # }
 set :files, {}
 
+puts "Index Server starting..."
+
 # Index server registers peers once they connect, adds it to registry if it isn't already present.
 post '/register_peer' do
   if already_registered?
-    "Peer #{params['peer_id']} already registered"
+    puts "Peer #{params['peer_id']} already registered"
   else
     # Registering peer to the index server by adding it to the peer_list data structure.
     settings.peer_list[params['peer_id']] = {
       host: params['host'],
       peer_id: params['peer_id']
     }
-    "Peer #{params['peer_id']} successfully registered"
+    puts "Peer #{params['peer_id']} - #{params['host']} successfully registered"
   end
 end
 
@@ -47,11 +49,12 @@ post '/update_index' do
   if params['op'] == 'add'
     # Update registry when new files added.
     add_file_to_index params['file_path'], params['peer_id']
+    puts "New File #{params['file_path']} - #{params['peer_id']} added to index."
   elsif params['op'] == 'remove'
     # Update registry when files are removed from the system.
     remove_file_from_index params['file_path'], params['peer_id']
+    puts "File #{params['file_path']} - #{params['peer_id']} removed from index."
   end
-  "Successfully updated the file index"
 end
 
 get '/file_index' do
@@ -66,6 +69,7 @@ end
 
 post '/retrieve' do
   # Index server posts to peer server to serve clients
+  puts "Download request forwarded to Peer Server to process download."
   HTTParty.post(
       "#{settings.peer_list[params['peer_id_that_has_file']][:host]}/send_file", {
         body: { 
@@ -74,7 +78,6 @@ post '/retrieve' do
         }
       }
     )
-  "Request passed to Peer Server"
 end
 
 

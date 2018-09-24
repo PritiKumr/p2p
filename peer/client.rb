@@ -16,11 +16,9 @@ Dotenv.load(".env", "#{ENV['PEER_ID']}.env")
 @peer_id = ENV['PEER_ID']
 @index_server_host = ENV['INDEX_HOST']
 
-binding.pry
-
 # Peer client attenpts to register with the index server on initial setup.
 def register_peer
-  puts "Registering with Index Server at #{@index_server_host}"
+  puts "Registering with Index Server at #{@index_server_host}\n"
   begin 
     HTTParty.post(
       "#{@index_server_host}/register_peer", 
@@ -30,7 +28,7 @@ def register_peer
     puts "Failed to register with Index Server. Exiting..."
     exit false
   end
-  puts "Successfully registered with Index Server"
+  puts "Successfully registered with Index Server - #{@peer_id}"
 end
 
 def file_added file_path
@@ -65,7 +63,7 @@ def clean_file_path path
 end
 
 
-puts "Initializing Peer"
+puts "Initializing Peer - #{@peer_id}"
 register_peer
 
 # Added listener to client directories to monitor all changes to the directory, so the central indexing server can always be at sync with the client peers.
@@ -76,5 +74,6 @@ listener = Listen.to(@watching_directory) do |modified, added, removed|
 end
 
 listener.start # not blocking
-puts "Watching file changes at #{@watching_directory}"
+puts "Watching file changes at #{@watching_directory}\n"
+sleep
 

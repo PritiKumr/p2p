@@ -1,3 +1,7 @@
+peer1 = 3001
+peer2 = 3002
+peer3 = 3003
+peer4 = 3004
 
 start_index_server:
 	ruby index_server/index_server.rb
@@ -38,3 +42,9 @@ peer4_server:
 	
 peer4_client:
 	cd peer && PEER_ID=peer4 ruby client.rb
+
+search:
+	curl http://localhost:$($(client))/search/$(file)
+
+retrieve:
+	curl http://localhost:$($(client))/retrieve/$(file)/$(server)
